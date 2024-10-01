@@ -11,16 +11,19 @@ use Illuminate\Http\RedirectResponse;
 
 class TestController extends Controller
 {
-    public function index() : RedirectResponse{
-        ZBooks::setUpBeforeClass();
+    public function index() : View{
+        // ZBooks::setUpBeforeClass();
         
         $data = [
-            'contact_name'=> 'Mason Urbina'
+            'contact_name'=> 'Padme Amidala',
+            'contact_type'=> 'vendor',
+            'customer_sub_type' => 'individual',
         ];
         
         $Zoho = new Zbooks();
+        $Zoho->setUpBeforeClass();
         $message= $Zoho->canCreateCustomer($data);
 
-        return redirect('/test')->with('message', $message);
+        return view('testView')->with('message', $message);
     }
 }

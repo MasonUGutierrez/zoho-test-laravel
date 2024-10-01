@@ -6,10 +6,16 @@
             Welcome to this test
         </h2>
 
-        @if (session('message'))
+        @isset($message)
+        <div class="alert alert-success">            
+            {{$message}} 
+         </div>
+        @endisset
+
+        {{-- @if (session('message'))
             <div class="alert alert-success">            
                {{session('message')}} 
             </div>
-        @endif
+        @endif --}}
     </div>
 @endsection

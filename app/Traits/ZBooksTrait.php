@@ -16,11 +16,13 @@ trait ZBooksTrait{
 
         if(isset($data))
         {
+            // var_dump($this->zoho);
             $customer = $this->zoho->contacts->create($data);             
+            // var_dump($customer);
         }
 
         $customers = $this->zoho->contacts->getList([
-            'contact_name'=>$customer->toArray(['contact_name'])
+            'contact_name'=>$customer->toArray()['contact_name']
         ]);
 
         (count($customers)>0)?$message="Contact has been created":$message="Something went wrong!";
