@@ -15,7 +15,7 @@ class TestController extends Controller
         // ZBooks::setUpBeforeClass();
         
         $data = [
-            'contact_name'=> 'Padme Amidala',
+            'contact_name'=> 'Luke Skywalker',
             'contact_type'=> 'vendor',
             'customer_sub_type' => 'individual',
         ];
