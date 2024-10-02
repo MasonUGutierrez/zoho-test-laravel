@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\View\View;
-
 use App\Traits\ZBooks;
-use Illuminate\Http\Response;
-use Illuminate\Http\RedirectResponse;
 
 class TestController extends Controller
 {
@@ -15,14 +11,14 @@ class TestController extends Controller
         // ZBooks::setUpBeforeClass();
         
         $data = [
-            'contact_name'=> 'Luke Skywalker',
-            'contact_type'=> 'vendor',
+            'contact_name'=> 'R2D2',
+            // 'contact_type'=> 'vendor',
             'customer_sub_type' => 'individual',
         ];
         
         $Zoho = new Zbooks();
         $Zoho->setUpBeforeClass();
-        $message= $Zoho->canCreateCustomer($data);
+        $message= $Zoho->canCreateVendor($data);
 
         return view('testView')->with('message', $message);
     }
