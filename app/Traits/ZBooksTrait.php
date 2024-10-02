@@ -9,16 +9,13 @@ trait ZBooksTrait{
         return $this->zoho->orgranizations->getList();
     }
 
-    // public function canCreateCustomer(ZohoBooks $zoho, $data = null)
     public function canCreateCustomer(?array $data = null)
     {
         $message='';
 
         if(isset($data))
         {
-            // var_dump($this->zoho);
             $customer = $this->zoho->contacts->create($data);             
-            // var_dump($customer);
         }
 
         $customers = $this->zoho->contacts->getList([
