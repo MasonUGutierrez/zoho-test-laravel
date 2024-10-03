@@ -11,14 +11,15 @@ class TestController extends Controller
         // ZBooks::setUpBeforeClass();
         
         $data = [
-            'contact_name'=> 'R2D2',
+            'contact_name'=> 'C3PO',
             // 'contact_type'=> 'vendor',
             'customer_sub_type' => 'individual',
         ];
         
-        $Zoho = new Zbooks();
-        $Zoho->setUpBeforeClass();
-        $message= $Zoho->canCreateVendor($data);
+        // $Zoho = new Zbooks();
+        // $Zoho->setUpBeforeClass();
+        $zoho = ZBooks::setupClass();
+        $message= $zoho->canCreateVendor($data);
 
         return view('testView')->with('message', $message);
     }

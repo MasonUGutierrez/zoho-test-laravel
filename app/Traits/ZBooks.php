@@ -25,22 +25,32 @@ class ZBooks{
     // protected static $zoho;
     protected $zoho;
 
+    private function __construct(?ZohoBooks $zoho = null)
+    {
+        $this->zoho = $zoho;
+        $this->client = $zoho->getClient();
+    }
+
     /**
      * Setup
      *
      * @return void
      */
     // public static function setUpBeforeClass(): void
-    public function setUpBeforeClass(): void
+    public static function setupClass(?array $credentials = null): static
     {
-        $oAuthClient = self::createOAuthClient();
+        $oAuthClient = self::createOAuthClient(isset($credentials)?$credentials:null);
 
         $client = new Client($oAuthClient);
-        $client->setOrganizationId(env('ORGANIZATION_ID'));
+        $client->setOrganizationId(
+            (isset($credentials['ORGANIZATION_ID']))?$credentials['ORGANIZATION_ID']:env('ORGANIZATION_ID')
+        );
         $client = new ZohoBooks($client);
 
-        $this->zoho = $client;
-        $this->client = $client->getClient();
+        // $this->zoho = $client;
+        // $this->client = $client->getClient();
+        $zbook = new static($client);
+        return $zbook;
     }
 
     /**
@@ -48,12 +58,17 @@ class ZBooks{
      *
      * @return OAuthClient
      */
-    protected static function createOAuthClient(): OAuthClient
+    protected static function createOAuthClient(?array $credentials = null): OAuthClient
     {
         $region = Region::US;
 
-        $client = new OAuthClient(env('CLIENT_ID'), env('CLIENT_SECRET'));
-        $client->setRefreshToken(env('REFRESH_TOKEN'));
+        $client = new OAuthClient(
+            (isset($credentials['CLIENT_ID']))?$credentials['CLIENT_ID']:env('CLIENT_ID'), 
+            (isset($credentials['CLIENT_SECRET']))?$credentials['CLIENT_SECRET']:env('CLIENT_SECRET')
+        );
+        $client->setRefreshToken(
+            (isset($credentials['REFRESH_TOKEN']))?$credentials['REFRESH_TOKEN']:env('REFRESH_TOKEN')
+        );
         $client->setRegion($region);
         $client->offlineMode();
         
